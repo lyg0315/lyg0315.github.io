@@ -1,0 +1,350 @@
+body {
+  background: #fff;
+  color: #555;
+  -webkit-font-smoothing: antialiased;
+}
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+#header {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  text-shadow: none;
+  height: auto;
+  min-height: unset;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+#header-outer {
+  height: auto;
+  padding: 16px 20px;
+}
+#header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+#logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #555;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+#subtitle {
+  display: none;
+}
+#main-nav {
+  float: none;
+  margin: 0;
+}
+#header #main-nav .main-nav-link {
+  color: #999;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+#header #main-nav .main-nav-link:hover {
+  color: #555;
+  background: #f0f0f0;
+}
+#mobile-nav {
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+.article {
+  margin-bottom: 32px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: box-shadow 0.2s;
+}
+.article:hover {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.article-inner {
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+.article-meta {
+  margin-bottom: 12px;
+}
+.article-meta a {
+  color: #999;
+  font-size: 13px;
+  text-decoration: none;
+}
+.article-meta a:hover {
+  color: #777;
+}
+.article-category .article-category-link {
+  color: #777;
+  background: #f2f2f2;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+.article-category .article-category-link:hover {
+  background: #e0e0e0;
+}
+.article-title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.4em;
+  margin: 8px 0 16px;
+}
+.article-title a {
+  color: #555;
+  text-decoration: none;
+}
+.article-title a:hover {
+  color: #888;
+}
+.article-entry {
+  color: #777;
+  font-size: 15px;
+  line-height: 1.8em;
+  margin-top: 16px;
+}
+.article-entry p {
+  margin-bottom: 1em;
+}
+.article-entry code {
+  background: #f8f8f8;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+  color: #777;
+}
+.article-entry pre {
+  background: #f8f8f8;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 16px 0;
+}
+.article-entry pre code {
+  background: none;
+  padding: 0;
+}
+.article-entry blockquote {
+  border-left: 3px solid #ddd;
+  background: #fafafa;
+  padding: 12px 16px;
+  margin: 16px 0;
+  color: #999;
+}
+.article-entry a {
+  color: #777;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.article-more-link a {
+  color: #888;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 2px;
+}
+.article-more-link a:hover {
+  color: #555;
+}
+.article-footer {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
+.article-tag-list-link {
+  color: #bbb;
+  font-size: 12px;
+  text-decoration: none;
+  margin-right: 8px;
+}
+.article-tag-list-link:hover {
+  color: #888;
+}
+.article-header {
+  margin-bottom: 24px;
+}
+.article-header .article-title {
+  font-size: 28px;
+}
+#sidebar {
+  padding-top: 40px;
+}
+.widget {
+  margin-bottom: 32px;
+}
+.widget-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #bbb;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+.widget a {
+  color: #999;
+  text-decoration: none;
+  font-size: 14px;
+}
+.widget a:hover {
+  color: #666;
+}
+.category-list-count,
+.archive-list-count,
+.tag-list-count {
+  color: #ccc;
+  font-size: 12px;
+  margin-left: 4px;
+}
+.category-list,
+.archive-list,
+.tag-list,
+.recent-posts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.category-list-item,
+.archive-list-item,
+.tag-list-item,
+.recent-posts .recent-post-item {
+  padding: 6px 0;
+  border-bottom: 1px solid #f8f8f8;
+}
+#footer {
+  background: #fafafa;
+  color: #aaa;
+  border-top: 1px solid #eee;
+  padding: 24px 0;
+  font-size: 13px;
+}
+#footer-info {
+  line-height: 1.8em;
+}
+#footer a {
+  color: #bbb;
+  text-decoration: none;
+}
+#page-nav {
+  text-align: center;
+  margin: 40px 0;
+}
+#page-nav .page-number {
+  color: #999;
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 0 4px;
+  text-decoration: none;
+}
+#page-nav .current {
+  background: #bbb;
+  color: #fff;
+}
+#page-nav a:hover {
+  background: #eee;
+}
+.article-entry .highlight {
+  background: #f8f8f8;
+  border-color: #eee;
+  color: #555;
+}
+.article-entry .highlight .gutter pre {
+  color: #bbb;
+}
+.article-entry .gist {
+  background: #f8f8f8;
+  border-color: #eee;
+}
+.article-entry .gist .gist-meta {
+  background: #f8f8f8;
+  color: #999;
+  text-shadow: none;
+}
+pre .comment,
+pre .title {
+  color: #a0a0a0;
+}
+pre .variable,
+pre .attribute,
+pre .tag,
+pre .regexp,
+pre .ruby .constant,
+pre .xml .tag .title,
+pre .xml .pi,
+pre .xml .doctype,
+pre .html .doctype,
+pre .css .id,
+pre .css .class,
+pre .css .pseudo {
+  color: #e45649;
+}
+pre .number,
+pre .preprocessor,
+pre .built_in,
+pre .literal,
+pre .params,
+pre .constant {
+  color: #c18401;
+}
+pre .class,
+pre .ruby .class .title,
+pre .css .rules .attribute {
+  color: #50a14f;
+}
+pre .string,
+pre .value,
+pre .inheritance,
+pre .header,
+pre .ruby .symbol,
+pre .xml .cdata {
+  color: #50a14f;
+}
+pre .css .hexcolor {
+  color: #0184bc;
+}
+pre .function,
+pre .python .decorator,
+pre .python .title,
+pre .ruby .function .title,
+pre .ruby .title .keyword,
+pre .perl .sub,
+pre .javascript .title,
+pre .coffeescript .title {
+  color: #4078f2;
+}
+pre .keyword,
+pre .javascript .function {
+  color: #a626a4;
+}
+@media screen and (max-width: 767px) {
+  #header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .article {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding: 20px 16px;
+  }
+  .article-title {
+    font-size: 19px;
+  }
+  #sidebar {
+    padding-top: 20px;
+  }
+}

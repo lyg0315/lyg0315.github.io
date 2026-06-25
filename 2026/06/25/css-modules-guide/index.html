@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>CSS Modules 中级实战指南 | LYG&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="CSS Modules 不是新框架，却是解决样式冲突最轻量的方案。本文不讲基础语法，聚焦项目中真正会用到的中级技巧。  1. 它到底解决了什么？传统 CSS 的全局作用域是万恶之源——你写了一个 .button，别人的 .button 就会污染你。CSS Modules 的解法很朴素：把每个 class 名自动编译成唯一的哈希串。 12345&#x2F;* Button.module.css *&#x2F;.prim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS Modules 中级实战指南">
+<meta property="og:url" content="http://example.com/2026/06/25/css-modules-guide/index.html">
+<meta property="og:site_name" content="LYG&#39;s Blog">
+<meta property="og:description" content="CSS Modules 不是新框架，却是解决样式冲突最轻量的方案。本文不讲基础语法，聚焦项目中真正会用到的中级技巧。  1. 它到底解决了什么？传统 CSS 的全局作用域是万恶之源——你写了一个 .button，别人的 .button 就会污染你。CSS Modules 的解法很朴素：把每个 class 名自动编译成唯一的哈希串。 12345&#x2F;* Button.module.css *&#x2F;.prim">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-25T13:51:21.450Z">
+<meta property="article:author" content="LYG">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LYG&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">技术记录与分享</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/categories">Categories</a>
+        
+          <a class="main-nav-link" href="/tags">Tags</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+        <a class="nav-icon nav-search-btn" title="search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-css-modules-guide" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/06/25/css-modules-guide/" class="article-date">
+  <time class="dt-published" datetime="2026-06-24T16:00:00.000Z" itemprop="datePublished">2026-06-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      CSS Modules 中级实战指南
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>CSS Modules 不是新框架，却是解决样式冲突最轻量的方案。本文不讲基础语法，聚焦项目中真正会用到的中级技巧。</p>
+<hr>
+<h2 id="1-它到底解决了什么？"><a href="#1-它到底解决了什么？" class="headerlink" title="1. 它到底解决了什么？"></a>1. 它到底解决了什么？</h2><p>传统 CSS 的全局作用域是万恶之源——你写了一个 <code>.button</code>，别人的 <code>.button</code> 就会污染你。CSS Modules 的解法很朴素：<strong>把每个 class 名自动编译成唯一的哈希串</strong>。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Button.module.css */</span></span><br><span class="line"><span class="selector-class">.primary</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#0070f3</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> styles <span class="keyword">from</span> <span class="string">&#x27;./Button.module.css&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">className</span>=<span class="string">&#123;styles.primary&#125;</span>&gt;</span>Click<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="comment">// 渲染后：&lt;button class=&quot;Button_primary_a3x9f&quot;&gt;Click&lt;/button&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>本质就是编译时把 <code>.primary</code> → <code>Button_primary_a3x9f</code>，彻底杜绝冲突。</p>
+<hr>
+<h2 id="2-composes：CSS-层面的继承"><a href="#2-composes：CSS-层面的继承" class="headerlink" title="2. composes：CSS 层面的继承"></a>2. <code>composes</code>：CSS 层面的继承</h2><p>与其在 JS 里拼接 class 名，不如在 CSS 层面声明复用关系：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 基础样式 */</span></span><br><span class="line"><span class="selector-class">.base</span> &#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">8px</span> <span class="number">16px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">4px</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.primary</span> &#123;</span><br><span class="line">  composes: base;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#0070f3</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.danger</span> &#123;</span><br><span class="line">  composes: base;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#e00</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;button className=&#123;styles.<span class="property">primary</span>&#125;&gt;保存&lt;/button&gt;</span><br><span class="line"><span class="comment">// 渲染：&lt;button class=&quot;base_x1y2z primary_a3x9f&quot;&gt;保存&lt;/button&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>跨文件组合</strong>也支持：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.advanced</span> &#123;</span><br><span class="line">  composes: base from <span class="string">&#x27;./shared.module.css&#x27;</span>;</span><br><span class="line">  <span class="comment">/* 你自己的扩展样式 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终 DOM 上会同时出现两个类，层叠关系按 CSS 书写顺序决定。</p>
+<hr>
+<h2 id="3-全局与局部的边界控制"><a href="#3-全局与局部的边界控制" class="headerlink" title="3. 全局与局部的边界控制"></a>3. 全局与局部的边界控制</h2><p>有些场景你需要“逃逸”到全局——比如覆盖第三方组件库的样式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 默认所有 class 都是局部的 */</span></span><br><span class="line"><span class="selector-class">.wrapper</span> &#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* :global 声明全局样式块 */</span></span><br><span class="line">:<span class="built_in">global</span>(.ant-modal-body) &#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">12px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* :local 显式局部（默认行为，但可以切换上下文） */</span></span><br><span class="line">:local .inner &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">8px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>反过来，如果整个文件想默认全局：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">:global &#123;</span><br><span class="line">  <span class="selector-class">.page-wrapper</span> &#123; <span class="comment">/* 全局 */</span> &#125;</span><br><span class="line">  <span class="selector-class">.page-header</span>  &#123; <span class="comment">/* 全局 */</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 单独声明局部 */</span></span><br><span class="line">:local .card &#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">16px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>实践建议</strong>：99% 的情况用默认局部模式，只在覆盖第三方库时用 <code>:global</code>。</p>
+<hr>
+<h2 id="4-动态样式与-CSS-变量的配合"><a href="#4-动态样式与-CSS-变量的配合" class="headerlink" title="4. 动态样式与 CSS 变量的配合"></a>4. 动态样式与 CSS 变量的配合</h2><p>CSS Modules 不适合动态值（比如根据数据变色），但配合 CSS 变量就很干净：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Progress.module.css */</span></span><br><span class="line"><span class="selector-class">.bar</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="built_in">var</span>(--progress, <span class="number">0%</span>);</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">8px</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">4px</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">var</span>(--color, <span class="number">#0070f3</span>);</span><br><span class="line">  <span class="attribute">transition</span>: width <span class="number">0.3s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt; div</span><br><span class="line">  className=&#123;styles.<span class="property">bar</span>&#125;</span><br><span class="line">  style=&#123;&#123;</span><br><span class="line">    <span class="string">&#x27;--progress&#x27;</span>: <span class="string">`<span class="subst">$&#123;percent&#125;</span>%`</span>,</span><br><span class="line">    <span class="string">&#x27;--color&#x27;</span>: percent &gt; <span class="number">80</span> ? <span class="string">&#x27;#e00&#x27;</span> : <span class="string">&#x27;#0070f3&#x27;</span>,</span><br><span class="line">  &#125; <span class="keyword">as</span> <span class="title class_">React</span>.<span class="property">CSSProperties</span>&#125;</span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>CSS Module 管静态结构，CSS 变量管动态值——泾渭分明。</p>
+<hr>
+<h2 id="5-TypeScript-支持"><a href="#5-TypeScript-支持" class="headerlink" title="5. TypeScript 支持"></a>5. TypeScript 支持</h2><p>默认 <code>import styles from &#39;./x.module.css&#39;</code> 是 <code>any</code> 类型。加一个声明文件即可获得智能提示：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/types/css.d.ts</span></span><br><span class="line"><span class="keyword">declare</span> <span class="variable language_">module</span> <span class="string">&#x27;*.module.css&#x27;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="attr">classes</span>: &#123; <span class="keyword">readonly</span> [<span class="attr">key</span>: <span class="built_in">string</span>]: <span class="built_in">string</span> &#125;;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span> classes;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>想更精确？用社区工具自动生成 <code>.d.ts</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i -D typed-css-modules</span><br><span class="line">npx tcm src -w   <span class="comment"># 监听模式，自动生成</span></span><br></pre></td></tr></table></figure>
+
+<p>每次保存 <code>.module.css</code> 时自动产出类型文件：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Button.module.css.d.ts（自动生成）</span></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">const</span> <span class="attr">styles</span>: &#123;</span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">base</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">primary</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">danger</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> styles;</span><br></pre></td></tr></table></figure>
+
+<p>之后写 <code>styles.primary</code> 就有自动补全了。</p>
+<hr>
+<h2 id="6-常见坑与解法"><a href="#6-常见坑与解法" class="headerlink" title="6. 常见坑与解法"></a>6. 常见坑与解法</h2><h3 id="坑一：class-名连字符写法"><a href="#坑一：class-名连字符写法" class="headerlink" title="坑一：class 名连字符写法"></a>坑一：class 名连字符写法</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* my-component.module.css */</span></span><br><span class="line"><span class="selector-class">.nav-item</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#333</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ JS 中不能直接用 .nav-item</span></span><br><span class="line"><span class="comment">// styles.nav-item  // 语法错误</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 用方括号</span></span><br><span class="line">&lt;span className=&#123;styles[<span class="string">&#x27;nav-item&#x27;</span>]&#125;&gt;<span class="title class_">Link</span>&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法</strong>：直接用 camelCase，<code>navItem</code> 就是 <code>styles.navItem</code>，少打两个字。</p>
+<h3 id="坑二：多个-class-的拼接"><a href="#坑二：多个-class-的拼接" class="headerlink" title="坑二：多个 class 的拼接"></a>坑二：多个 class 的拼接</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 啰嗦</span></span><br><span class="line">className=&#123;<span class="string">`<span class="subst">$&#123;styles.base&#125;</span> <span class="subst">$&#123;styles.active&#125;</span>`</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 用数组</span></span><br><span class="line">className=&#123;[styles.<span class="property">base</span>, styles.<span class="property">active</span>].<span class="title function_">join</span>(<span class="string">&#x27; &#x27;</span>)&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 或者用一个小工具</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">cx</span> = (<span class="params">...<span class="attr">classes</span>: (<span class="built_in">string</span> | <span class="literal">undefined</span> | <span class="literal">false</span>)[]</span>) =&gt;</span><br><span class="line">  classes.<span class="title function_">filter</span>(<span class="title class_">Boolean</span>).<span class="title function_">join</span>(<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">className=&#123;<span class="title function_">cx</span>(styles.<span class="property">base</span>, isActive &amp;&amp; styles.<span class="property">active</span>)&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="坑三：composes-的顺序"><a href="#坑三：composes-的顺序" class="headerlink" title="坑三：composes 的顺序"></a>坑三：<code>composes</code> 的顺序</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.a</span> &#123; <span class="attribute">color</span>: red; &#125;</span><br><span class="line"><span class="selector-class">.b</span> &#123; <span class="attribute">color</span>: blue; &#125;</span><br><span class="line"><span class="selector-class">.c</span> &#123; composes: a b; &#125;  <span class="comment">/* b 后声明，color 为 blue，但取决于 a 和 b 在文件中的顺序 */</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>规则</strong>：CSS Modules 的 <code>composes</code> 不改变 CSS 层叠规则。如果 <code>a</code> 和 <code>b</code> 选择器权重相同，后声明的生效。拿不准时，用 CSS 变量替代 <code>composes</code> 传参。</p>
+<hr>
+<h2 id="7-与其他方案对比"><a href="#7-与其他方案对比" class="headerlink" title="7. 与其他方案对比"></a>7. 与其他方案对比</h2><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>作用域隔离</th>
+<th>学习成本</th>
+<th>运行时开销</th>
+<th>适合场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>CSS Modules</strong></td>
+<td>✅ 编译时</td>
+<td>低</td>
+<td>无</td>
+<td>中小项目、Vite&#x2F;CRA&#x2F;Next.js</td>
+</tr>
+<tr>
+<td>CSS-in-JS</td>
+<td>✅ 运行时</td>
+<td>中</td>
+<td>有</td>
+<td>高度动态的样式</td>
+</tr>
+<tr>
+<td>Tailwind</td>
+<td>✅ 原子类</td>
+<td>中</td>
+<td>无</td>
+<td>快速原型、团队规范强</td>
+</tr>
+<tr>
+<td>BEM 命名</td>
+<td>❌ 靠约定</td>
+<td>低</td>
+<td>无</td>
+<td>老项目维护</td>
+</tr>
+<tr>
+<td>Shadow DOM</td>
+<td>✅ 浏览器原生</td>
+<td>高</td>
+<td>无</td>
+<td>Web Components</td>
+</tr>
+</tbody></table>
+<p><strong>CSS Modules 的最佳位置</strong>：你认可“样式写在 CSS 文件里”的传统开发方式，但想要自动的作用域隔离。它不改变你的工作流，只在编译时默默加上哈希。</p>
+<hr>
+<h2 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h2><table>
+<thead>
+<tr>
+<th>技巧</th>
+<th>一句话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>核心原理</td>
+<td>class 名编译成唯一哈希，杜绝冲突</td>
+</tr>
+<tr>
+<td><code>composes</code></td>
+<td>CSS 层面的样式继承，DOM 上多类并存</td>
+</tr>
+<tr>
+<td><code>:global</code> &#x2F; <code>:local</code></td>
+<td>精确控制作用域边界</td>
+</tr>
+<tr>
+<td>CSS 变量配合</td>
+<td>动态值用变量，静态样式用 Module</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td><code>*.module.css.d.ts</code> 自动生成，获得智能提示</td>
+</tr>
+<tr>
+<td>多 class 拼接</td>
+<td>用数组 + join，或写一个 <code>cx</code> 工具函数</td>
+</tr>
+</tbody></table>
+<p>CSS Modules 不是银弹，但它是“对 CSS 改动最小的隔离方案”——如果你喜欢 <code>.css</code> 文件的开发体验，它几乎是最优解。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2026/06/25/css-modules-guide/" data-id="cuid0kSDCimeYure46KMxVxbg" data-title="CSS Modules 中级实战指南" class="article-share-link"><span class="fa fa-share">share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2026/06/20/typescript-advanced-tips/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">TypeScript 进阶技巧速览</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">recent_posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/06/25/css-modules-guide/">CSS Modules 中级实战指南</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/20/typescript-advanced-tips/">TypeScript 进阶技巧速览</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+        © LYG's Blog | Powered by Hexo
+      
+      &copy; 2026 LYG<br>
+      powered_by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
