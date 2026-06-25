@@ -17,6 +17,9 @@ body {
   top: 0;
   z-index: 100;
 }
+#banner {
+  display: none;
+}
 #header-outer {
   height: auto;
   padding: 16px 20px;
@@ -42,14 +45,15 @@ body {
   margin: 0;
 }
 #header #main-nav .main-nav-link {
-  color: #999;
+  color: #333;
   font-size: 14px;
+  font-weight: 600;
   padding: 6px 12px;
   border-radius: 4px;
   transition: all 0.2s;
 }
 #header #main-nav .main-nav-link:hover {
-  color: #555;
+  color: #000;
   background: #f0f0f0;
 }
 #mobile-nav {
@@ -204,9 +208,13 @@ body {
 .category-list-count,
 .archive-list-count,
 .tag-list-count {
-  color: #ccc;
+  color: #aaa;
   font-size: 12px;
-  margin-left: 4px;
+  margin-left: 2px;
+  background: none;
+  padding: 0;
+  border: none;
+  vertical-align: baseline;
 }
 .category-list,
 .archive-list,
