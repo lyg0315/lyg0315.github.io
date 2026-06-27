@@ -133,10 +133,12 @@ body {
   border-radius: 6px;
   padding: 16px;
   margin: 16px 0;
+  color: #444;
 }
 .article-entry pre code {
   background: none;
   padding: 0;
+  color: #444;
 }
 .article-entry blockquote {
   border-left: 3px solid #ddd;
@@ -283,7 +285,7 @@ body {
 }
 pre .comment,
 pre .title {
-  color: #a0a0a0;
+  color: #8b8b8b;
 }
 pre .variable,
 pre .attribute,
@@ -297,7 +299,7 @@ pre .html .doctype,
 pre .css .id,
 pre .css .class,
 pre .css .pseudo {
-  color: #e45649;
+  color: #d73a49;
 }
 pre .number,
 pre .preprocessor,
@@ -305,12 +307,12 @@ pre .built_in,
 pre .literal,
 pre .params,
 pre .constant {
-  color: #c18401;
+  color: #b36200;
 }
 pre .class,
 pre .ruby .class .title,
 pre .css .rules .attribute {
-  color: #50a14f;
+  color: #3d7c3d;
 }
 pre .string,
 pre .value,
@@ -318,10 +320,10 @@ pre .inheritance,
 pre .header,
 pre .ruby .symbol,
 pre .xml .cdata {
-  color: #50a14f;
+  color: #3d7c3d;
 }
 pre .css .hexcolor {
-  color: #0184bc;
+  color: #016b9b;
 }
 pre .function,
 pre .python .decorator,
@@ -331,11 +333,11 @@ pre .ruby .title .keyword,
 pre .perl .sub,
 pre .javascript .title,
 pre .coffeescript .title {
-  color: #4078f2;
+  color: #2b65d9;
 }
 pre .keyword,
 pre .javascript .function {
-  color: #a626a4;
+  color: #8b3f9e;
 }
 @media screen and (max-width: 767px) {
   #header-inner {
